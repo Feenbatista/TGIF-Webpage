@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <title>Statistics</title>
+</head>
+
+<body style="font-family: Bradley Hand, cursive;">
+  <div class="container-fluid mt-3">
+    <div class="row">
+      <a class="col-10" href="#">
+        <img src="Graphic/magnified.png" alt="Logo" style="height: 55px;">
+      </a>
+      <div class="col-2 mt-3">
+        <img src="Graphic/mail.png" alt="email">
+        <a href="mailto:info@tgif.net">info@tgif.net</a>
+      </div>
+    </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light border mt-3">
+    <a class="navbar-brand" href="#"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" href="home.html">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Congress 113</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="house.html">House</a>
+            <a class="dropdown-item" href="senate.html">Senate</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Attendance</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="house-statistics-attendance.html">House</a>
+            <a class="dropdown-item" href="senate-statistics-attendance.html">Senate</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Loyalty</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="house-statistics-loyalty.html">House</a>
+            <a class="dropdown-item" href="senate-statistics-loyalty.html">Senate</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div style="padding-top: 10px; font-size: 80%;" id="app">
+    <div class="row">
+      <div class="col">
+        <div class="col mr-5">
+            <h3>Attendance</h3>
+            <p class="text-justify">The Constitution specifies that a majority of members constitutes a quorum
+                to do business in each house. Representatives and senators rarely force the presence of a quorum by demanding quorum
+                calls; thus, in most cases, debates continue even if a majority is not present.</p>
+
+            <p class="text-justify">The Senate uses roll-call votes; a clerk calls out the names of all the
+                senators, each senator stating "aye" or "no" when his or her name is announced. The House reserves roll-call votes for
+                the most formal matters, as a roll-call of all 435 representatives takes quite some time; normally,
+                members vote by electronic device. In the case of a tie, the motion in question fails. In the
+                Senate, the Vice President may (if present) cast the tiebreaking vote.</p>
+        </div>
+      </div>
+      <div class="col">
+        <h4 style="text-align: right;">House at a Glance</h4>
+        <table id="datahtml"></table>
+        <table class="table table-hover">
+          <thead class="table">
+            <tr>
+              <th scope="col">Party</th>
+              <th scope="col">Number</th>
+              <th scope="col">% Voted w/ Party</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td>Democrats</td>
+              <td>{{statistics.number_of_democrats}}</td>
+              <td>{{statistics.democrats_average_votes_with_party}}%</td>
+            </tr>
+            <tr>
+              <td>Republicans</td>
+              <td>{{statistics.number_of_republicans}}</td>
+              <td>{{statistics.republicans_average_votes_with_party}}%</td>
+            </tr>
+            <tr>
+              <td>Independents</td>
+              <td>{{statistics.number_of_independents}}</td>
+              <td>{{statistics.independents_average_votes_with_party}}%</td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td>{{statistics.total}}</td>
+              <td>{{statistics.total_average}}%</td>
+            </tr>
+        </table>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col mr-5">
+        <h4>Most Engaged (Top 10% Attendance)</h4>
+        <table id="less_engaged" class="table table-hover">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col" colspan=1>Name</th>
+              <th scope="col">Missed Votes</th>
+              <th scope="col">% Missed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, key) in statistics.least_engaged">
+              <td><a v-bind:href=item.url>{{ item.first_name + " " + item.last_name }}</a></td>
+              <td>{{ item.missed_votes }}</td>
+              <td>{{ item.missed_votes_pct }}%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col">
+        <h4>Least Engaged (Bottom 10% Attendance)</h4>
+        <table id="most_engaged" class="table table-hover">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col" colspan=1>Names</th>
+              <th scope="col">Missed Votes</th>
+              <th scope="col">% Missed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, key) in statistics.most_engaged">
+              <td><a v-bind:href=item.url>{{ item.first_name + " " + item.last_name }}</a></td>
+              <td>{{ item.missed_votes }}</td>
+              <td>{{ item.missed_votes_pct }}%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer text-center border mt-3 mb-3">
+      TGIF 2019 | All rights reserved
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="js/pro-congress-113-housev3.js"></script>
+  <script src="js/mainVue.js"></script>
+</body>
+
+</html>
